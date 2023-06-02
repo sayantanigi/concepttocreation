@@ -1,9 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 error_reporting(0);
-class Course extends Admin_Controller {
+class Course extends Admin_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->data['header'] = '';
         $this->admin_login();
@@ -59,7 +61,8 @@ class Course extends Admin_Controller {
     //     $this->load->view(admin_view('default'), $this->data);
     // }
 
-    public function course_list($page = 1) {
+    public function course_list($page = 1)
+    {
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
         }
@@ -105,7 +108,8 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function changeStatus() {
+    public function changeStatus()
+    {
         if ($this->input->post('id')) {
             $id = $this->input->post('id');
             $status = $this->input->post('status');
@@ -124,7 +128,8 @@ class Course extends Admin_Controller {
         }
     }
 
-    public function certificate_courses($page = 1) {
+    public function certificate_courses($page = 1)
+    {
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
         }
@@ -169,7 +174,8 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function subscription_courses($page = 1) {
+    public function subscription_courses($page = 1)
+    {
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
         }
@@ -214,7 +220,8 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function course_transaction() {
+    public function course_transaction()
+    {
         $this->data['title'] = 'Transaction List';
         $this->data['tab'] = 'trans';
         $this->data['main'] = admin_view('product/txn');
@@ -222,7 +229,8 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function add($id = false) {
+    public function add($id = false)
+    {
         $this->data['title'] = 'Add Course';
         $this->data['tab'] = 'add_products';
         $this->data['main'] = admin_view('product/add');
@@ -264,13 +272,14 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function add_course($id = false) {
+    public function add_course($id = false)
+    {
         $this->data['title'] = 'Add Course';
         $this->data['tab'] = 'add_comp';
         $this->data['main'] = admin_view('product/add');
         $this->data['course_cat'] = $this->db->get('cr_category')->result_array();
         $this->data['course'] = $this->Course_model->getNew();
-        
+
         if ($id) {
             $this->data['title'] = 'Edit Course';
             $this->data['course'] = $course = $this->Course_model->getRow($id);
@@ -310,7 +319,8 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function add_certif_course($id = false)  {
+    public function add_certif_course($id = false)
+    {
         $this->data['title'] = 'Add Course';
         $this->data['tab'] = 'add_cert';
         $this->data['main'] = admin_view('product/add_certificate_course');
@@ -356,7 +366,8 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function add_materials($id) {
+    public function add_materials($id)
+    {
         $this->data['title'] = 'Add Course Material';
         $this->data['tab'] = 'add_subscr';
         $this->data['main'] = admin_view('product/add_material');
@@ -366,33 +377,35 @@ class Course extends Admin_Controller {
         $this->load->view(admin_view('default'), $this->data);
     }
 
-    public function testInput($data) {
-		$data = trim($data);
-		$data = stripcslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
+    public function testInput($data)
+    {
+        $data = trim($data);
+        $data = stripcslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
-    public function save_materials($id){
+    public function save_materials($id)
+    {
         if ($this->input->post('submit') && $this->input->post('module')) {
             $this->form_validation->set_rules('material_type', 'Material Type', 'required');
             if ($this->form_validation->run()) {
                 $formdata['course_id'] = $id;
                 $mydata = array(
-					'course_id' => @$id,
-					'module' => @$this->testInput($this->input->post('module')),
-					'material_type' => @$this->testInput($this->input->post('material_type')),
-					'video_type' => @$this->testInput($this->input->post('video_type')),
-					'video_url' => @$this->testInput($this->input->post('video_url')),
-					'material_description' => @$this->testInput($this->input->post('material_description')),
-					'created_at' => date("Y-m-d h:i:s"),
-					'status' => @$this->input->post('status')
-				);
+                    'course_id' => @$id,
+                    'module' => @$this->testInput($this->input->post('module')),
+                    'material_type' => @$this->testInput($this->input->post('material_type')),
+                    'video_type' => @$this->testInput($this->input->post('video_type')),
+                    'video_url' => @$this->testInput($this->input->post('video_url')),
+                    'material_description' => @$this->testInput($this->input->post('material_description')),
+                    'created_at' => date("Y-m-d h:i:s"),
+                    'status' => @$this->input->post('status')
+                );
                 if ($_FILES['video_file']['name'] != '') {
                     $config['upload_path'] = './uploads/materials/';
                     $config['allowed_types'] = '*';
                     $config['max_size'] = '*';
-                    $config['overwrite'] = false; 
+                    $config['overwrite'] = false;
                     $config['remove_spaces'] = TRUE;  //it will remove all spaces
                     $config['encrypt_name'] = true;   //it wil encrypte the original file name
                     $this->load->library('upload', $config);
@@ -407,9 +420,9 @@ class Course extends Admin_Controller {
                     }
                 }
                 $insert = $this->Commonmodel->add_details('course_materials', $mydata);
-                if($insert) {
+                if ($insert) {
                     $dataOrdering = array(
-                        'position_order'=>$insert
+                        'position_order' => $insert
                     );
                     $this->db->update('course_materials', $dataOrdering, array('id' => $insert));
                 }
@@ -419,7 +432,7 @@ class Course extends Admin_Controller {
                     $countfiles = count($_FILES['files']['name']);
                     // Looping all files
                     for ($i = 0; $i < $countfiles; $i++) {
-                        if(!empty($_FILES['files']['name'][$i])){
+                        if (!empty($_FILES['files']['name'][$i])) {
                             // Define new $_FILES array - $_FILES['file']
                             $_FILES['file']['name'] = $_FILES['files']['name'][$i];
                             $_FILES['file']['type'] = $_FILES['files']['type'][$i];
@@ -431,7 +444,7 @@ class Course extends Admin_Controller {
                             $config['allowed_types'] = '*';
                             $config['max_size'] = '*'; // max_size in kb
                             $config['file_name'] = $_FILES['files']['name'][$i];
-                            $config['overwrite'] = false; 
+                            $config['overwrite'] = false;
                             $config['remove_spaces'] = true;  //it will remove all spaces
                             $config['encrypt_name'] = false;   //it wil encrypte the original file name
                             //Load upload library
@@ -474,8 +487,157 @@ class Course extends Admin_Controller {
                             'status' => 1,
                             'created_at' => date("Y-m-d h:i:s")
                         );
+
+                        $basicdata[$k]['quiz_file'] = '';
+                        if (!empty($_FILES['file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['quiz_file'] = $fileData['file_name'];
+                            }
+                        }
+
+                        $basicdata[$k]['ans1_file'] = '';
+                        if (!empty($_FILES['option1_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option1_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option1_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option1_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option1_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option1_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option1_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans1_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+                        $basicdata[$k]['ans2_file'] = '';
+                        if (!empty($_FILES['option2_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option2_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option2_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option2_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option2_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option2_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option2_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans2_file'] = $fileData['file_name'];
+                            }
+                        }
+
+                        $basicdata[$k]['ans3_file'] = '';
+                        if (!empty($_FILES['option3_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option3_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option3_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option3_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option3_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option3_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option3_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans3_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+                        $basicdata[$k]['ans4_file'] = '';
+                        if (!empty($_FILES['option4_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option4_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option4_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option4_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option4_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option4_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option4_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans4_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+
+
+
+
+
+
+
                     }
+                    // echo "<pre>";
+                    //  print_r($basicdata);die;
                     $this->db->insert_batch('course_quiz', $basicdata);
+                    // echo $this->db->last_query();die;
                 }
                 // $this->session->set_flashdata("success", "Course Material saved");
                 $msg = '["Course Material added successfully!", "success", "#36A1EA"]';
@@ -492,13 +654,14 @@ class Course extends Admin_Controller {
         }
     }
 
-    public function material_list($id=null, $module_id = null) {
+    public function material_list($id = null, $module_id = null)
+    {
 
         $this->data['title'] = 'Course Material List';
         $this->data['tab'] = 'v_mat';
         $this->data['main'] = admin_view('product/material_view');
 
-        if(@$module_id) {
+        if (@$module_id) {
             $this->data['materials'] = $this->db->get_where('course_materials', array('course_id' => $id, 'module' => $module_id))->result();
         } else {
             $this->data['materials'] = $this->db->get_where('course_materials', array('course_id' => $id))->result();
@@ -571,7 +734,7 @@ class Course extends Admin_Controller {
 
         $this->session->set_flashdata('msg', $msg);
 
-        redirect(admin_url('course/update_material/'.$course_id."/".$material_id));
+        redirect(admin_url('course/update_material/' . $course_id . "/" . $material_id));
     }
 
     function delete_cert($id)
@@ -718,18 +881,18 @@ class Course extends Admin_Controller {
             $insert = $this->Course_model->save($formdata, 'course_modules');
             $lastId = $this->db->insert_id();
 
-            if($insert) {
+            if ($insert) {
                 $dataOrdering = array(
-                    'position_order'=>$lastId
+                    'position_order' => $lastId
                 );
-    
+
                 $this->db->update('course_modules', $dataOrdering, array('id' => $lastId));
             }
-            
+
             $this->session->set_flashdata("success", "Module created successfully!");
             redirect(admin_url('course/module_list/' . $id));
         }
-        
+
         $this->load->view(admin_view('default'), $this->data);
     }
 
@@ -781,15 +944,14 @@ class Course extends Admin_Controller {
     {
         // echo $id;
         // echo "<pre>";print_r($_POST);
-        $pref=$this->input->post('pref');
-        $i=1;
+        $pref = $this->input->post('pref');
+        $i = 1;
         foreach ($pref as $key => $value) {
-           $formdata['preference'] = $i++;;
+            $formdata['preference'] = $i++;;
 
             $this->db->update('course_modules', $formdata, array('id' => $value));
         }
-         redirect(admin_url('course/module_list/' . $crsid));
-
+        redirect(admin_url('course/module_list/' . $crsid));
     }
 
     public function save_module_ordering($course_id = false)
@@ -797,21 +959,20 @@ class Course extends Admin_Controller {
 
         $position = $this->input->post('position');
 
-        $i=1;
-        foreach($position as $k=>$v){
+        $i = 1;
+        foreach ($position as $k => $v) {
 
             $data = array(
-                'position_order'=>$i
+                'position_order' => $i
             );
 
             $this->db->update('course_modules', $data, array('id' => $v));
 
             $i++;
         }
-
     }
 
-    public function view_material_module($id,$module)
+    public function view_material_module($id, $module)
     {
 
         $this->data['title'] = 'Course Material Format';
@@ -821,19 +982,18 @@ class Course extends Admin_Controller {
         $this->data['quesquz'] = $this->db->get_where('course_quiz', array('course_id' => $id))->result();
         $this->load->view(admin_view('default'), $this->data);
     }
-     public function save_chapter_pref($crsid = false,$module= false)
+    public function save_chapter_pref($crsid = false, $module = false)
     {
         // echo $crsid;
         // echo "<pre>";print_r($_POST);die;
-        $pref=$this->input->post('pref');
-        $i=1;
+        $pref = $this->input->post('pref');
+        $i = 1;
         foreach ($pref as $key => $value) {
-           $formdata['preference'] = $i++;;
+            $formdata['preference'] = $i++;;
 
             $this->db->update('course_materials', $formdata, array('id' => $value));
         }
-         redirect(admin_url('course/view_material_module/' . $crsid.'/'.$module));
-
+        redirect(admin_url('course/view_material_module/' . $crsid . '/' . $module));
     }
 
     public function update_module($course_id, $id)
@@ -898,8 +1058,8 @@ class Course extends Admin_Controller {
             }
 
             if ($old_image && $_FILES['module_image']['name'] != '') {
-                if (file_exists('./uploads/modules/'.$old_image)) {
-                    @unlink('./uploads/modules/'.$old_image);
+                if (file_exists('./uploads/modules/' . $old_image)) {
+                    @unlink('./uploads/modules/' . $old_image);
                 }
             }
 
@@ -957,18 +1117,18 @@ class Course extends Admin_Controller {
                 $old_file = $this->input->post('old_file');
 
                 $mydata = array(
-					'module' => @$this->testInput($this->input->post('module')),
-					'video_url' => @$this->testInput($this->input->post('video_url')),
-					'material_description' => @$this->testInput($this->input->post('material_description')),
-					'status' => @$this->input->post('status')
-				);
+                    'module' => @$this->testInput($this->input->post('module')),
+                    'video_url' => @$this->testInput($this->input->post('video_url')),
+                    'material_description' => @$this->testInput($this->input->post('material_description')),
+                    'status' => @$this->input->post('status')
+                );
 
                 if ($_FILES['video_file']['name'] != '') {
 
                     $config['upload_path'] = './uploads/materials/';
                     $config['allowed_types'] = '*';
                     $config['max_size'] = '*';
-                    $config['overwrite'] = false; 
+                    $config['overwrite'] = false;
                     $config['remove_spaces'] = TRUE;  //it will remove all spaces
                     $config['encrypt_name'] = true;   //it wil encrypte the original file name
 
@@ -987,11 +1147,11 @@ class Course extends Admin_Controller {
                 }
 
                 if ($old_file && $_FILES['video_file']['name'] != '') {
-                    if (file_exists('./uploads/materials/'.$old_file)) {
-                        @unlink('./uploads/materials/'.$old_file);
+                    if (file_exists('./uploads/materials/' . $old_file)) {
+                        @unlink('./uploads/materials/' . $old_file);
                     }
                 }
-    
+
                 $update = $this->Commonmodel->update_row('course_materials', $mydata, $where);
 
                 if (!empty($_FILES['files']['name']) && count(array_filter($_FILES['files']['name'])) > 0) {
@@ -1001,7 +1161,7 @@ class Course extends Admin_Controller {
                     // Looping all files
                     for ($i = 0; $i < $countfiles; $i++) {
 
-                        if(!empty($_FILES['files']['name'][$i])){
+                        if (!empty($_FILES['files']['name'][$i])) {
 
                             // Define new $_FILES array - $_FILES['file']
                             $_FILES['file']['name'] = $_FILES['files']['name'][$i];
@@ -1015,7 +1175,7 @@ class Course extends Admin_Controller {
                             $config['allowed_types'] = '*';
                             $config['max_size'] = '*'; // max_size in kb
                             $config['file_name'] = $_FILES['files']['name'][$i];
-                            $config['overwrite'] = false; 
+                            $config['overwrite'] = false;
                             $config['remove_spaces'] = true;  //it will remove all spaces
                             $config['encrypt_name'] = false;   //it wil encrypte the original file name
 
@@ -1023,7 +1183,7 @@ class Course extends Admin_Controller {
                             $this->load->library('upload', $config);
                             $this->upload->initialize($config);
 
-                            
+
                             // File upload
                             if ($this->upload->do_upload('file')) {
                                 // Get data about the file
@@ -1036,7 +1196,7 @@ class Course extends Admin_Controller {
                             }
                         }
                     }
-                        
+
                     if (!empty($uploadData)) {
                         $this->Commonmodel->insertBatch('course_resources', $uploadData);
                     }
@@ -1048,8 +1208,16 @@ class Course extends Admin_Controller {
                 $ans3 = $this->input->post('ans3');
                 $ans4 = $this->input->post('ans4');
                 $cor_ans = $this->input->post('cor_ans');
+                $old_image = $this->input->post('old_image');
+                $ans1_old_image = $this->input->post('ans1_old_image');
+                $ans2_old_image = $this->input->post('ans2_old_image');
+                $ans3_old_image = $this->input->post('ans3_old_image');
+                $ans4_old_image = $this->input->post('ans4_old_image');
 
-                if(!empty($ques)) {
+                // echo $old_image."--";
+
+
+                if (!empty($ques)) {
                     $this->Commonmodel->delete_single_con('course_quiz', array('material_id' => $id));
 
                     for ($k = 0; $k < count($ques); $k++) {
@@ -1065,23 +1233,227 @@ class Course extends Admin_Controller {
                             'status'            => 1,
                             'created_at'        => date("Y-m-d h:i:s")
                         );
+
+                        // echo $old_image[$k];die;
+                        if (empty($old_image[$k])) {
+                            $basicdata[$k]['quiz_file'] = '';
+                        } else {
+                            $basicdata[$k]['quiz_file'] = $old_image[$k];
+                        }
+                        if (!empty($_FILES['file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['files']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['quiz_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+                        if ($old_image[$k] && $_FILES['file_name']['name'][$k] != '') {
+                            if (file_exists('./uploads/quizs/'.$old_image[$k])) {
+                                @unlink('./uploads/quizs/'.$old_image[$k]);
+                            }
+                        }
+
+
+
+
+                        if (empty($ans1_old_image[$k])) {
+                            $basicdata[$k]['ans1_file'] = '';
+                        } else {
+                            $basicdata[$k]['ans1_file'] = $ans1_old_image[$k];
+                        }
+                        if (!empty($_FILES['option1_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option1_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option1_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option1_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option1_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option1_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option1_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans1_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+                        if ($ans1_old_image[$k] && $_FILES['option1_file_name']['name'][$k] != '') {
+                            if (file_exists('./uploads/quizs/answer_files/'.$ans1_old_image[$k])) {
+                                @unlink('./uploads/quizs/answer_files/'.$ans1_old_image[$k]);
+                            }
+                        }
+
+
+
+                        if (empty($ans2_old_image[$k])) {
+                            $basicdata[$k]['ans2_file'] = '';
+                        } else {
+                            $basicdata[$k]['ans2_file'] = $ans2_old_image[$k];
+                        }
+                        if (!empty($_FILES['option2_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option2_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option2_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option2_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option2_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option2_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option2_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans2_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+                        if ($ans2_old_image[$k] && $_FILES['option2_file_name']['name'][$k] != '') {
+                            if (file_exists('./uploads/quizs/answer_files/'.$ans2_old_image[$k])) {
+                                @unlink('./uploads/quizs/answer_files/'.$ans2_old_image[$k]);
+                            }
+                        }
+
+
+                        if (empty($ans3_old_image[$k])) {
+                            $basicdata[$k]['ans3_file'] = '';
+                        } else {
+                            $basicdata[$k]['ans3_file'] = $ans3_old_image[$k];
+                        }
+                        if (!empty($_FILES['option3_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option3_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option3_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option3_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option3_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option3_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option3_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans3_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+                        if ($ans3_old_image[$k] && $_FILES['option3_file_name']['name'][$k] != '') {
+                            if (file_exists('./uploads/quizs/answer_files/'.$ans3_old_image[$k])) {
+                                @unlink('./uploads/quizs/answer_files/'.$ans3_old_image[$k]);
+                            }
+                        }
+
+
+                        if (empty($ans4_old_image[$k])) {
+                            $basicdata[$k]['ans4_file'] = '';
+                        } else {
+                            $basicdata[$k]['ans4_file'] = $ans4_old_image[$k];
+                        }
+                        if (!empty($_FILES['option4_file_name']['name'][$k])) {
+                            // Define new $_FILES array - $_FILES['file']
+                            $_FILES['file']['name'] = $_FILES['option4_file_name']['name'][$k];
+                            $_FILES['file']['type'] = $_FILES['option4_file_name']['type'][$k];
+                            $_FILES['file']['tmp_name'] = $_FILES['option4_file_name']['tmp_name'][$k];
+                            $_FILES['file']['error'] = $_FILES['option4_file_name']['error'][$k];
+                            $_FILES['file']['size'] = $_FILES['option4_file_name']['size'][$k];
+                            // Set preference
+                            $config['upload_path'] = 'uploads/quizs/answer_files/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '*'; // max_size in kb
+                            $config['file_name'] = $_FILES['option4_file_name']['name'][$k];
+                            $config['overwrite'] = false;
+                            $config['remove_spaces'] = true;  //it will remove all spaces
+                            $config['encrypt_name'] = false;   //it wil encrypte the original file name
+                            //Load upload library
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            // File upload
+                            if ($this->upload->do_upload('file')) {
+                                // Get data about the file
+                                $fileData = $this->upload->data();
+                                $basicdata[$k]['ans4_file'] = $fileData['file_name'];
+                            }
+                        }
+
+
+                        if ($ans4_old_image[$k] && $_FILES['option4_file_name']['name'][$k] != '') {
+                            if (file_exists('./uploads/quizs/answer_files/'.$ans4_old_image[$k])) {
+                                @unlink('./uploads/quizs/answer_files/'.$ans4_old_image[$k]);
+                            }
+                        }
+
+
+
+
+
                     }
-    
+
+                 
                     $this->db->insert_batch('course_quiz', $basicdata);
                 }
 
                 $msg = '["Course Material updated successfully!", "success", "#36A1EA"]';
                 $this->session->set_flashdata('msg', $msg);
-    
+
                 redirect(admin_url('course/material_list/' . $course_id));
             } else {
-                redirect(admin_url('course/update_material/' ."/".$course_id ."/" . $id), 'refresh');
+                redirect(admin_url('course/update_material/' . "/" . $course_id . "/" . $id), 'refresh');
             }
         } else {
             $msg = '["Some error occured, Please try again!", "error", "#e50914"]';
             $this->session->set_flashdata('msg', $msg);
 
-            redirect(admin_url('course/update_material/' ."/".$course_id ."/" . $id), 'refresh');
+            redirect(admin_url('course/update_material/' . "/" . $course_id . "/" . $id), 'refresh');
         }
     }
 
@@ -1110,7 +1482,7 @@ class Course extends Admin_Controller {
         if ($id > 0) {
             $result = $this->db->get_where('course_resources', array('material_id' => $id))->result();
 
-            if(!empty($result)) {
+            if (!empty($result)) {
                 foreach ($result as $key => $value) {
                     if (@$value->resource_file && file_exists('./uploads/materials/' . @$value->resource_file)) {
                         @unlink('./uploads/materials/' . @$value->resource_file);

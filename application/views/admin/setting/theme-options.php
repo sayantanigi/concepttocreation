@@ -111,12 +111,12 @@ function get_option($fname)
                      <input type="text" name="phone" value="<?= get_option('phone'); ?>" placeholder="Enter Phone No" class="form-control input-sm" />
                   </div>
                </div>
-               <div class="form-group">
+               <!-- <div class="form-group">
                   <label class="col-sm-2 control-label">Phone 2</label>
                   <div class="col-sm-8">
                      <input type="text" name="tollfree" value="<?= get_option('tollfree'); ?>" placeholder="Enter Toll Free" class="form-control input-sm" />
                   </div>
-               </div>
+               </div> -->
                <div class="form-group">
                   <label class="col-sm-2 control-label">Info Email</label>
                   <div class="col-sm-8">

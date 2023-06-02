@@ -46,6 +46,19 @@ class Home extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+
+    public function term_conditions() {
+		$data = array('title' => 'Terms Of service','page' => 'terms');
+        $getAboutDataSql = "SELECT * FROM `cms` WHERE `id` = 12";
+        $about_data = $this->db->query($getAboutDataSql);
+        $data['termsData'] = $about_data->result_array();
+
+        // print_r($data['termsData']);die;
+		$this->load->view('header', $data);
+		$this->load->view('terms');
+		$this->load->view('footer');
+	}
+
     public function consulting() {
 		$data = array('title' => 'Consulting','page' => 'consulting');
         $getConsultDataSql = "SELECT * FROM `cms` WHERE `id` = 21";
@@ -279,25 +292,60 @@ class Home extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+    public function email_unsubscribe(){
+        $id = $this->uri->segment(2);
+        $data = array(
+			'title' => 'Email Unsubscribe Page',
+			'page' => 'Email Unsubscribe',
+            'id'    =>$id
+            
+		);
+       
+
+		$this->load->view('header', $data);
+		$this->load->view('email_unsubscibe');
+		$this->load->view('footer');
+    }
+
     public function contactFormSubmit() {
 		$fname = $this->input->post("name");
         $email = $this->input->post("email");
         $phone = $this->input->post("phone");
         $sub = $this->input->post("subject");
         $msg = $this->input->post("message");
-        $contactFormData = array ('fname' => $fname, 'email' => $email, 'phone' => $phone, 'subject' => $sub, 'message' => $msg);
+        $address = $this->input->post("address");
+        $b_name = $this->input->post("b_name");
+        $contactFormData = array ('fname' => $fname, 'email' => $email, 'phone' => $phone, 'subject' => $sub, 'message' => $msg,'address' =>$address,'business_name' =>$b_name);
         $result = $this->Commonmodel->add_details('contacts', $contactFormData);
         $insert_id = $this->db->insert_id();
         if(!empty($insert_id)) {
             $subject = $sub;
             $imagePath = base_url() . 'user_assets/images/C2C_Home/Header_Logo.png';
-            $message = "<table style='width=100%;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td><table class='col-600' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-top:2px solid #232323;width=600px;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'><img src='".$imagePath."' style='max-height: 40px;'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'>Dear Team,</td></tr></tbody></table></td></tr><tr><td align='center'><table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-bottom:2px solid #232323'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Name : ".$fname."</p></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Email: ".$email."</p></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Phone: ".$phone."</p></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Message: ".nl2br($msg)."</p></td></tr></tbody></table></td></tr></tbody></table>";
+            $message = "<table style='width=100%;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td><table class='col-600' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-top:2px solid #232323;width=600px;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'><img src='".$imagePath."' style='max-height: 40px;'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'>Dear Team,</td></tr></tbody></table></td></tr><tr><td align='center'><table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-bottom:2px solid #232323'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Name : ".$fname."</p></td></tr>
+            
+            <tr>
+            <td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Email: ".$email."</p></td>
+            </tr>
+            <tr>
+            <td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Phone: ".$phone."</p></td>
+            </tr>
+            <tr>
+            <td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Address: ".$address."</p></td>
+            </tr>
+            <tr>
+            <td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Business name: ".$b_name."</p></td>
+            </tr>
+            <tr>
+            <td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Message: ".nl2br($msg)."</p></td>
+            </tr>
+            </tbody></table></td></tr></tbody></table>";
             $mail = new PHPMailer(true);
             try {
                 //Server settings
                 $mail->CharSet = 'UTF-8';
                 $mail->SetFrom($email);
-                $mail->AddAddress('sayantan@goigi.in', 'ContactToCreation');
+                // $mail->AddAddress('goutampaul@goigi.in', 'ContactToCreation');
+                $mail->AddAddress($email, 'ContactToCreation');
                 $mail->IsHTML(true);
                 $mail->Subject = $subject;
                 $mail->Body = $message;
@@ -319,6 +367,31 @@ class Home extends CI_Controller {
             echo $msg = "Opps, Try again!";
         }
 	}
+
+
+    public function EmailUnsubcribeSubmit() {
+        $email = $this->input->post("email");
+        $date=date('Y-m-d h:i:s');
+
+        $isExitSql = "SELECT * FROM `email_unsubscribe_list` WHERE `email_id` = '" . $email . "'";
+		$isExist = $this->db->query($isExitSql)->num_rows();
+        if($isExist==0) {
+
+        $contactFormData = array ('email_id' => $email, 'status' => '0','created_at' =>$date);
+        $result = $this->Commonmodel->add_details('email_unsubscribe_list', $contactFormData);
+        $insert_id = $this->db->insert_id();
+        if(!empty($insert_id)) {
+            
+            echo $msg = "Email unsubscribe successfully done";
+        } else {
+            echo $msg = "Opps, Try again!";
+        }
+    }
+    else{
+        echo $msg ="0";
+    }
+	}
+    
 
     public function consultFormSubmit() {
 		$fname = $this->input->post("name");

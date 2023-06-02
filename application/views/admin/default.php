@@ -260,7 +260,7 @@
                     <li class="<?= ($tab == 'teams') ? 'active' : ''; ?>"><a href="<?= admin_url('teams') ?>"><i class="fa fa-circle"></i>Team Lists</a></li>
                     </ul>
                     </li>
-                    <li class="treeview <?= ($tab == 'add_blog' || $tab == 'blog') ? 'active' : ''; ?>">
+                    <!-- <li class="treeview <?= ($tab == 'add_blog' || $tab == 'blog') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-newspaper-o"></i>
                     <span>Media Management</span>
@@ -273,9 +273,9 @@
                     <li class="<?= ($tab == 'blog') ? 'active' : ''; ?>"><a href="<?= admin_url('blog') ?>"><i class="fa fa-circle"></i> Media Lists</a></li>
 
                     </ul>
-                    </li>
+                    </li> -->
 
-                    <li class="treeview <?= ($tab == 'faqs') ? 'active' : ''; ?> ">
+                    <!-- <li class="treeview <?= ($tab == 'faqs') ? 'active' : ''; ?> ">
                     <a href="#">
                     <i class="fa fa-user"></i>
                     <span>FAQ Management</span>
@@ -287,7 +287,7 @@
                     <li class="<?= ($tab == 'add_faq') ? 'active' : ''; ?>"><a href="<?= admin_url('faqs/add') ?>"><i class="fa fa-circle"></i> Add Faq</a></li>
                     <li class="<?= ($tab == 'faqs') ? 'active' : ''; ?>"><a href="<?= admin_url('faqs') ?>"><i class="fa fa-circle"></i> Faq Lists</a></li>
                     </ul>
-                    </li>
+                    </li> -->
                     <!-- <li class="treeview <?= ($tab == 'add_testimonials' || $tab == 'testimonials') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-user"></i>
@@ -302,7 +302,7 @@
                     </ul>
                     </li> -->
 
-                    <li class="treeview <?= ($tab == 'gallery' || $tab == 'ad_gallery') ? 'active' : ''; ?>">
+                    <!-- <li class="treeview <?= ($tab == 'gallery' || $tab == 'ad_gallery') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-image"></i>
                     <span>Partner Management</span>
@@ -314,7 +314,7 @@
                     <li class="<?= ($tab == 'ad_gallery') ? 'active' : ''; ?>"><a href="<?= admin_url('Partner/add') ?>"><i class="fa fa-circle"></i> Add Partner</a></li>
                     <li class="<?= ($tab == 'gallery') ? 'active' : ''; ?>"><a href="<?= admin_url('Partner') ?>"><i class="fa fa-circle"></i> Partner Lists</a></li>
                     </ul>
-                    </li>
+                    </li> -->
                     <li class="treeview <?= ($tab == 'cert_apply' || $tab == 'rv_cont' || $tab == 'contacts' || $tab == 'cert_contacts' || $tab == 'contacts_stay') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-envelope"></i>
@@ -342,6 +342,8 @@
                     <li class="<?= ($tab == 'add_service' || $tab == 'service') ? 'active' : ''; ?>">
                     <a href="<?= admin_url('settings') ?>"><i class="fa fa-wrench"></i> Settings</a>
                     </li>
+
+                    <li class="<?= ($tab == 'email_unsubscribe') ? 'active' : ''; ?>"><a href="<?= admin_url('settings/email_unsubscribe_list') ?>"><i class="fa fa-circle"></i> Email Unsubscribe List</a></li>
                     </ul>
         </section>
         <!-- /.sidebar -->
@@ -929,7 +931,7 @@ endif ?>
         var i = 1;
         $('#addmoreques').click(function() {
             i++;
-            $('#quiz_s').append('<div class="col-sm-10" style="margin-top:20px;" id="morques' + i + '"><button style="margin-top:27px;" type="button" name="remove" id="' + i + '" class="btn btn-danger btn-sm btn_remove">X</button><div class="col-sm-11"><div class="form-group"><label for="exampleInputEmail1">Question</label><input type="text" name="ques[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Question"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option1</label><input type="text" name="ans1[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option2</label><input type="text" name="ans2[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option3</label> <input type="text" name="ans3[]]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option4</label><input type="text" name="ans4[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-12"><div class="form-group"><label for="exampleInputEmail1">Choose Correct Answer</label> <select name="cor_ans[]" class="form-control"><option  value="ans1">Option1</option><option value="ans2">Option2</option><option value="ans3">Option3</option><option value="ans4">Option4</option></select></div></div>')
+            $('#quiz_s').append('<div class="col-sm-10" style="margin-top:20px;" id="morques' + i + '"><button style="margin-top:27px;" type="button" name="remove" id="' + i + '" class="btn btn-danger btn-sm btn_remove">X</button><div class="col-sm-11"><div class="form-group"><label for="exampleInputEmail1">Question</label><input type="text" name="ques[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Question"></div></div><div class="col-sm-12"><div class="form-group"><label for="exampleInputEmail1">Image</label><input type="file" name="file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option1</label><input type="text" name="ans1[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option1 Image</label><input type="file" name="option1_file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option2</label><input type="text" name="ans2[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option2 Image</label><input type="file" name="option2_file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option3</label> <input type="text" name="ans3[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option3 Image</label><input type="file" name="option3_file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option4</label><input type="text" name="ans4[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option4 Image</label><input type="file" name="option4_file_name[]" class="form-control"></div></div><div class="col-sm-12"><div class="form-group"><label for="exampleInputEmail1">Choose Correct Answer</label> <select name="cor_ans[]" class="form-control"><option  value="ans1">Option1</option><option value="ans2">Option2</option><option value="ans3">Option3</option><option value="ans4">Option4</option></select></div></div>')
         });
         $(document).on('click', '.btn_remove', function() {
             var button_id = $(this).attr("id");
@@ -941,7 +943,7 @@ endif ?>
         var j = 1;
         $('#addmoreques_edit').click(function() {
         j++;
-        $('#quiz_s_edt').append('<div class="col-sm-10" style="margin-top:20px;" id="morques' + j + '"><button style="margin-top:27px;" type="button" name="remove" id="' + j + '" class="btn btn-danger btn-sm btn_remove">X</button><div class="col-sm-11"><div class="form-group"><label for="exampleInputEmail1">Question</label><input type="text" name="ques[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Question"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option1</label><input type="text" name="ans1[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option2</label><input type="text" name="ans2[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option3</label> <input type="text" name="ans3[]]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option4</label><input type="text" name="ans4[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-12"><div class="form-group"><label for="exampleInputEmail1">Choose Correct Answer</label> <select name="cor_ans[]" class="form-control"><option  value="ans1">Option1</option><option value="ans2">Option2</option><option value="ans3">Option3</option><option value="ans4">Option4</option></select></div></div>')
+        $('#quiz_s_edt').append('<div class="col-sm-10" style="margin-top:20px;" id="morques' + j + '"><button style="margin-top:27px;" type="button" name="remove" id="' + j + '" class="btn btn-danger btn-sm btn_remove">X</button><div class="col-sm-11"><div class="form-group"><label for="exampleInputEmail1">Question</label><input type="text" name="ques[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Question"></div></div><div class="col-sm-12"><div class="form-group"><label for="exampleInputEmail1">Image</label><input type="file" name="file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option1</label><input type="text" name="ans1[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option1 Image</label><input type="file" name="option1_file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option2</label><input type="text" name="ans2[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option2 Image</label><input type="file" name="option2_file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option3</label> <input type="text" name="ans3[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option3 Image</label><input type="file" name="option3_file_name[]" class="form-control"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option4</label><input type="text" name="ans4[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer"></div></div><div class="col-sm-6"><div class="form-group"><label for="exampleInputEmail1">Option4 Image</label><input type="file" name="option4_file_name[]" class="form-control"></div></div><div class="col-sm-12"><div class="form-group"><label for="exampleInputEmail1">Choose Correct Answer</label> <select name="cor_ans[]" class="form-control"><option  value="ans1">Option1</option><option value="ans2">Option2</option><option value="ans3">Option3</option><option value="ans4">Option4</option></select></div></div>')
         });
 
         $(document).on('click', '.btn_remove', function() {

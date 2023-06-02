@@ -34,6 +34,7 @@
               <th>Phone</th>
               <th>Date</th>
               <th>Status</th>
+              <th>Enrolled</th>
               <th>Actions</th>
               <!-- <th>Reply</th> -->
 
@@ -61,29 +62,12 @@
                           </label>
                       </div>
 										</td>
-                  <!-- <td>
-                    <?php
-                    if ($member->status == 1) {
-                    ?>
-                      <a href="<?= admin_url('members/deactivate/' . $member->id) ?>"><span class="badge bg-green">Active</span></a>
-                    <?php
-                    } else {
-                    ?>
-                      <a href="<?= admin_url('members/activate/' . $member->id) ?>"><span class="badge bg-red">Inactive</span></a>
-                    <?php
-                    }
-                    ?>
-                  </td> -->
 
-                  <!-- <td><?= $member->rply_text ?></td> -->
-                  <!-- <td>
-                    <?php if ($member->rply_status != 1) { ?>
-                      <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?= $i ?>" class="text-info" title="contact">Contact</a>
-                    <?php } else { ?>
-                      <a href="javascript:void(0);" class="btn btn-primary" title="Replied">REPLIED</a>
-                      <p>Date: <?= date('d M Y', strtotime($member->rply_date)) ?></p>
-                    <?php } ?>
-                  </td> -->
+                    <td style="vertical-align: middle;">
+                    <?php if(@$member->course_id) {echo "Yes"; } else { echo"No"; } ?>
+										</td>
+                 
+                 
                    <td>
                       <div class="action-button">
                       

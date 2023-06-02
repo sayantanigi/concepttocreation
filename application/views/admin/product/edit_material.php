@@ -131,29 +131,159 @@
                       </div>
                     </div>
                     <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Image</label>
+
+                      <?php if (@$qs->quiz_file && file_exists('./uploads/quizs/' . @$qs->quiz_file)) { ?>
+                      <input type="hidden" name="old_image[]" value="<?php echo @$qs->quiz_file; ?>">
+
+                                <img src="<?= base_url('uploads/quizs/' . @$qs->quiz_file) ?>" alt="" style="width: auto; max-height: 59px; padding: 1px; border: 2px solid #ccc;background: #ccc;">
+                            <?php } else { ?>
+                      <input type="hidden" name="old_image[]" value="">
+
+                                <img src="<?= base_url('images/thumbs.jpg') ?>" alt="" style="width: auto; max-height: 52px; padding: 1px; border: 2px solid #e87c03;background: #ccc;">
+                            <?php } ?>
+                    </div>
+                  </div>
+                    
+                    <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Image</label>
+                      <input type="file" name="file_name[]" class="form-control">
+                    </div>
+                  </div>
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Option1</label>
                         <input type="text" name="ans1[]" value="<?= $qs->ans1 ?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer">
                       </div>
                     </div>
+
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option1 Image</label>
+                      <input type="file" name="option1_file_name[]" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option1 Image</label>
+                      <?php if (@$qs->ans1_file && file_exists('./uploads/quizs/answer_files/' . @$qs->ans1_file)) { ?>
+                      <input type="hidden" name="ans1_old_image[]" value="<?php echo @$qs->ans1_file; ?>">
+
+                                <img src="<?= base_url('uploads/quizs/answer_files/' . @$qs->ans1_file) ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #ccc;background: #ccc;">
+                            <?php } else { ?>
+                      <input type="hidden" name="ans1_old_image[]" value="">
+
+                                <img src="<?= base_url('images/thumbs.jpg') ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #e87c03;background: #ccc;">
+                            <?php } ?>
+                    </div>
+                  </div>
+
+
+
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Option2</label>
                         <input type="text" name="ans2[]" value="<?= $qs->ans2 ?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer">
                       </div>
                     </div>
+
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option2 Image</label>
+                      <input type="file" name="option2_file_name[]" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option2 Image</label>
+                      <?php if (@$qs->ans2_file && file_exists('./uploads/quizs/answer_files/' . @$qs->ans2_file)) { ?>
+                      <input type="hidden" name="ans2_old_image[]" value="<?php echo @$qs->ans2_file; ?>">
+
+                                <img src="<?= base_url('uploads/quizs/answer_files/' . @$qs->ans2_file) ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #ccc;background: #ccc;">
+                            <?php } else { ?>
+                      <input type="hidden" name="ans2_old_image[]" value="">
+
+                                <img src="<?= base_url('images/thumbs.jpg') ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #e87c03;background: #ccc;">
+                            <?php } ?>
+                    </div>
+                  </div>
+
+
+
+
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Option3</label>
                         <input type="text" name="ans3[]" value="<?= $qs->ans3 ?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer">
                       </div>
                     </div>
+
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option3 Image</label>
+                      <input type="file" name="option3_file_name[]" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option3 Image</label>
+                      <?php if (@$qs->ans3_file && file_exists('./uploads/quizs/answer_files/' . @$qs->ans3_file)) { ?>
+                      <input type="hidden" name="ans3_old_image[]" value="<?php echo @$qs->ans3_file; ?>">
+
+                                <img src="<?= base_url('uploads/quizs/answer_files/' . @$qs->ans3_file) ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #ccc;background: #ccc;">
+                            <?php } else { ?>
+                      <input type="hidden" name="ans3_old_image[]" value="">
+
+                                <img src="<?= base_url('images/thumbs.jpg') ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #e87c03;background: #ccc;">
+                            <?php } ?>
+                    </div>
+                  </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Option4</label>
                         <input type="text" name="ans4[]" value="<?= $qs->ans4 ?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer">
                       </div>
                     </div>
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option4 Image</label>
+                      <input type="file" name="option4_file_name[]" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option4 Image</label>
+                      <?php if (@$qs->ans4_file && file_exists('./uploads/quizs/answer_files/' . @$qs->ans4_file)) { ?>
+                      <input type="hidden" name="ans4_old_image[]" value="<?php echo @$qs->ans4_file; ?>">
+
+                                <img src="<?= base_url('uploads/quizs/answer_files/' . @$qs->ans4_file) ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #ccc;background: #ccc;">
+                            <?php } else { ?>
+                      <input type="hidden" name="ans4_old_image[]" value="">
+
+                                <img src="<?= base_url('images/thumbs.jpg') ?>" alt="" style="width: auto; max-height: 50px; padding: 1px; border: 2px solid #e87c03;background: #ccc;">
+                            <?php } ?>
+                    </div>
+                  </div>
+                    <!-- <div class="col-sm-12">
+                    <div class="form-group">
+                      <?php  //if($qs->ans_img_flag==1){
+                        ?>
+                      <input type="checkbox" checked id="upload_option" name="ans_img_flag[]" value="1">
+                      <?php
+                      //} else{
+                        ?>
+                        <input type="checkbox" id="upload_option" name="ans_img_flag[]" value="1">
+                        <?php
+
+                     // } ?>
+                     
+                      <label for="upload_option">Checked for image upload option with answer</label>
+                    </div>
+                  </div> -->
                     <div class="col-sm-12" style="margin-bottom: 15px;">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Choose Correct Answer</label>

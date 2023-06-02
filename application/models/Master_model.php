@@ -31,15 +31,46 @@ class Master_model extends CI_Model
         return $this->db->get_where($this->table, array('id' => $id))->first_row();
     }
 
-    function getAll($offset = 0, $limit = 40, $table = false)
+    function getAll_members($offset = 0, $limit = 40, $table = false)
     {
+
+        
+        $this->db->select('users.*,c.course_id,c.enrollment_id');
+        $this->db->from($table);
         if ($table) {
             $this->table = $table;
         }
+        
+        $this->db->join('course_enrollment c', 'c.user_id = users.id', 'LEFT');
+        $this->db->group_by('users.id'); 
         $this->db->order_by('id', 'DESC');
         $this->db->limit($limit, $offset);
+        $rest = $this->db->get();
+        // $rest = $this->db->get($this->table);
+        $data['results'] = $rest->result();
+        // echo $this->db->last_query(); die;
+
+        $data['total'] = $this->db->get($this->table)->num_rows();
+        return $data;
+    }
+
+    function getAll($offset = 0, $limit = 40, $table = false)
+    {
+
+        
+      
+        if ($table) {
+            $this->table = $table;
+        }
+        
+       
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit($limit, $offset);
+       
         $rest = $this->db->get($this->table);
         $data['results'] = $rest->result();
+        // echo $this->db->last_query(); die;
+
         $data['total'] = $this->db->get($this->table)->num_rows();
         return $data;
     }

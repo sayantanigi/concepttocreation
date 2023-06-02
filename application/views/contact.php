@@ -87,11 +87,21 @@ $optionsList = $this->db->query($getOptionsSql)->result(); ?>
                                         <input class="from-control" type="text" id="phone" name="phone" placeholder="Phone" required="">
                                     </div>
                                     <div class="col-lg-6 mb-35 col-md-6 col-sm-6">
+                                        <input class="from-control" type="text" id="address" name="address" placeholder="Address" required="">
+                                    </div>
+                                    <div class="col-lg-6 mb-35 col-md-6 col-sm-6">
+                                        <input class="from-control" type="text" id="b_name" name="b_name" placeholder="Business name" required="">
+                                    </div>
+                                    <div class="col-lg-6 mb-35 col-md-6 col-sm-6">
                                         <input class="from-control" type="text" id="subject" name="subject" placeholder="Subject" required="">
                                     </div>
 
                                     <div class="col-lg-12 mb-50">
                                         <textarea class="from-control" id="message" name="message" placeholder=" Message" required=""></textarea>
+                                    </div>
+                                    <div class="col-lg-12 mb-35 col-md-6 col-sm-6">
+                                    <input type="checkbox" id="upload_option" name="terms_condition" required value="1">
+                                    <label for="upload_option">Checked for accept <a target="_blank" href="<?= base_url('term') ?>">Term & Conditions</a></label>
                                     </div>
                                 </div>
                                 <div class="form-group mb-0">

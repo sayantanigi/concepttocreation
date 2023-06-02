@@ -33,7 +33,7 @@ class Members extends AI_Controller
         $this->data['title'] = 'Members';
         $this->data['tab'] = 'members';
         $this->data['main'] = admin_view('members/index');
-        $members = $this->Master_model->getAll($offset, $show_per_page, 'users');
+        $members = $this->Master_model->getAll_members($offset, $show_per_page, 'users');
         // if ($this->input->get('btnsearch')) {
         //     $q = $this->input->get('q');
         //     if ($q <> '') {
@@ -43,6 +43,7 @@ class Members extends AI_Controller
         //         $members = $this->Service_model->getAllSearched($offset, $show_per_page, $likes);
         //     }
         // }
+        // select u.*,c.course_id,c.enrollment_id from users u left join course_enrollment c on c.user_id = u.id group by u.id;
         $this->data['members'] = $members['results'];
         $config['base_url'] = admin_url('members/index');
         $config['num_links'] = 2;

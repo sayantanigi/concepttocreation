@@ -1,4 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Contacts extends Admin_Controller {
@@ -7,6 +10,8 @@ class Contacts extends Admin_Controller {
 	{
 		parent::__construct();
 		$this->admin_login();
+		require 'vendor/autoload.php';
+
                
 	}
 
@@ -60,7 +65,7 @@ class Contacts extends Admin_Controller {
 	}
         function delete($id){
                 if ($id > 0) {
-            $this->User_model->delete($id,'contacts');
+            $this->Master_model->delete($id,'contacts');
             $this->session->set_flashdata('success', 'row deleted successfully.');
         }
         redirect(admin_url('contacts'));
@@ -122,11 +127,11 @@ class Contacts extends Admin_Controller {
             'rply_status'=>1,
             'rply_date'=>date("Y-m-d h:i:s"));
 
-             $htmlContent = "
+        $htmlContent = "
         <table align='center' style='width:650px; text-align:center; background:#8e88881f;'>
         <tbody>
         <tr style='height:50px;background-color:#ffeabf;'>
-        <td valign='middle' style='color:white;'><h2 class='start'>CCRC</h2></td>
+        <td valign='middle' style='color:white;'><h2 class='start'>Concept To Creation</h2></td>
         </tr>
         <tr>
         <td valign='top' align='center' colspan='2'>
@@ -142,7 +147,7 @@ class Contacts extends Admin_Controller {
         
         <br>
         Best Regards,<br>
-        CCRC <br><br>
+        Concept To Creation <br><br>
         This is an automated response, please DO NOT reply.
         </td>
         </tr>
@@ -154,21 +159,51 @@ class Contacts extends Admin_Controller {
         </table>
         ";
 
-        $this->load->library('email');
-        $this->email->set_mailtype("html");
-        $this->email->from('CCRC Team');
-        $this->email->to($detl->email);
+    //     $this->load->library('email');
+    //     $this->email->set_mailtype("html");
+    //     $this->email->from('CCRC Team');
+    //     $this->email->to($detl->email);
 
-        $this->email->subject('Reply Message From CCRC');
+    //     $this->email->subject('Reply Message From CCRC');
 
-        $this->email->message($htmlContent);
+    //     $this->email->message($htmlContent);
 
-        if($this->email->send()){
-       $this->session->set_flashdata('success', 'Replied Successfully');
-       $this->db->update('contacts',$arr,array('id'=>$id));
-       redirect(admin_url('contacts'));
+    //     if($this->email->send()){
+    //    $this->session->set_flashdata('success', 'Replied Successfully');
+    //    $this->db->update('contacts',$arr,array('id'=>$id));
+    //    redirect(admin_url('contacts'));
 
-            }
+    //         }
+
+    $mail = new PHPMailer(true);
+    try {
+        //Server settings
+        $mail->CharSet = 'UTF-8';
+        $mail->SetFrom($detl->email);
+        $mail->AddAddress($detl->email, 'Reply Email');
+        $mail->IsHTML(true);
+        $mail->Subject = 'Reply Message From Concepttocreation';
+        $mail->Body = $htmlContent;
+        //Send email via SMTP
+        $mail->IsSMTP();
+        $mail->SMTPAuth   = true;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Host       = "smtp.gmail.com";
+        $mail->Port       = 587; //587 465
+        $mail->Username   = "no-reply@goigi.com";
+        $mail->Password   = "wj8jeml3eu0z";
+        $mail->send();
+        // echo 'Message has been sent';
+    } catch (Exception $e) {
+        $this->session->set_flashdata('error_message', "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+    }
+    $this->session->set_flashdata('success', 'Replied Successfully');
+    $this->db->update('contacts',$arr,array('id'=>$id));
+    redirect(admin_url('contacts'));
+
+
+
+
         }
     }
     public function view_review($page=1)
@@ -376,7 +411,7 @@ class Contacts extends Admin_Controller {
     }
     function stay_delete($id){
        if ($id > 0) {
-            $this->User_model->delete($id,'consulting_form');
+            $this->Master_model->delete($id,'consulting_form');
             $this->session->set_flashdata('success', 'row deleted successfully.');
         }
         redirect(admin_url('contacts/stay_with_us'));
@@ -481,21 +516,55 @@ class Contacts extends Admin_Controller {
         </table>
         ";
 
-        $this->load->library('email');
-        $this->email->set_mailtype("html");
-        $this->email->from('CCRC Team');
-        $this->email->to($detl->email);
+        // $this->load->library('email');
+        // $this->email->set_mailtype("html");
+        // $this->email->from('CCRC Team');
+        // $this->email->to($detl->email);
 
-        $this->email->subject('Reply Message From CCRC');
+        // $this->email->subject('Reply Message From CCRC');
 
-        $this->email->message($htmlContent);
+        // $this->email->message($htmlContent);
 
-          if($this->email->send()){
-           $this->session->set_flashdata('success', 'Replied Successfully');
-           $this->db->update('consulting_form',$arr,array('id'=>$id));
-           redirect(admin_url('contacts/stay_with_us'));
+        //   if($this->email->send()){
+        //    $this->session->set_flashdata('success', 'Replied Successfully');
+        //    $this->db->update('consulting_form',$arr,array('id'=>$id));
+        //    redirect(admin_url('contacts/stay_with_us'));
 
-            }
+        //     }
+
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            $mail->CharSet = 'UTF-8';
+            $mail->SetFrom($detl->email);
+            $mail->AddAddress($detl->email, 'Reply Email');
+            $mail->IsHTML(true);
+            $mail->Subject = 'Reply Message From Concepttocreation';
+            $mail->Body = $htmlContent;
+            //Send email via SMTP
+            $mail->IsSMTP();
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Host       = "smtp.gmail.com";
+            $mail->Port       = 587; //587 465
+            $mail->Username   = "no-reply@goigi.com";
+            $mail->Password   = "wj8jeml3eu0z";
+            $mail->send();
+            // echo 'Message has been sent';
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error_message', "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+        }
+        $this->session->set_flashdata('success', 'Replied Successfully');
+        $this->db->update('consulting_form',$arr,array('id'=>$id));
+        redirect(admin_url('contacts/stay_with_us'));
+
+
+
+
+
+
+
+
         }
    
     }

@@ -108,8 +108,13 @@
                   <div class="col-sm-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Question</label>
-                      <!-- <input type="text" name="ques[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Question1" row="20"> -->
                       <textarea name="ques[]" class="form-control" id="exampleInputEmail1" placeholder="Enter Question1" rows="10"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Image</label>
+                      <input type="file" name="file_name[]" class="form-control">
                     </div>
                   </div>
                   <div class="col-sm-6">
@@ -120,8 +125,20 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
+                      <label for="exampleInputEmail1">Option1 Image</label>
+                      <input type="file" name="option1_file_name[]" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
                       <label for="exampleInputEmail1">Option2</label>
                       <input type="text" name="ans2[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option2 Image</label>
+                      <input type="file" name="option2_file_name[]" class="form-control">
                     </div>
                   </div>
                   <div class="col-sm-6">
@@ -132,10 +149,31 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
+                      <label for="exampleInputEmail1">Option3 Image</label>
+                      <input type="file" name="option3_file_name[]" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
                       <label for="exampleInputEmail1">Option4</label>
                       <input type="text" name="ans4[]" value="" class="form-control" id="exampleInputEmail1" placeholder="Enter Answer">
                     </div>
+                  </div>  
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Option4 Image</label>
+                      <input type="file" name="option4_file_name[]" class="form-control">
+                    </div>
                   </div>
+
+                  <!-- <div class="col-sm-12">
+                    <div class="form-group">
+                      <input type="checkbox" id="upload_option" name="ans_img_flag[]" value="1">
+                      <label for="upload_option">Checked for image upload option with answer</label>
+                    </div>
+                  </div> -->
+
+                 
                   <div class="col-sm-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Choose Correct Answer</label>
