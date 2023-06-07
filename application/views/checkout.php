@@ -5,7 +5,7 @@ require_once APPPATH."third_party/stripe/init.php";
 
 $checkout_session = \Stripe\Checkout\Session::create([
     'success_url' => base_url('success/{CHECKOUT_SESSION_ID}'),
-    'cancel_url' => base_url('cancel'),
+    'cancel_url' => base_url('course-list'),
     'payment_method_types' => ['card'],
     'mode' => 'payment',
     'line_items' => [['price' => $price_key, 'quantity' => 1]],
