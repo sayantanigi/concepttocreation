@@ -54,7 +54,8 @@
                                 if($this->db->insert_id()) { ?>
                                     <div class="heading" style="text-align: center;">
                                         <h4 class="card-title">Payment Successful #<?php echo $transaction_id ; ?></h4>
-                                        <p class="card-text" style="padding: 0 0 30px 0;">We received your payment on your purchase #<?php echo $transaction_id ; ?>, check your email for more information.</p>
+                                        <p class="card-text">We received your payment on your purchase #<?php echo $transaction_id ; ?>, check your email for more information.</p>
+                                        <a href="<?php echo $pay_data['charges']['data'][0]['receipt_url'];?>" target="_blank" style="padding: 0 0 30px 0; display: inline-block;">Generate Invoice</a>
                                     </div>
                             <?php }	}?>
                             </div>
