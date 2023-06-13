@@ -271,8 +271,8 @@ class Home extends CI_Controller {
     public function success($id) {
         $data['p_id'] = $id;
         $this->load->view('header');
-		$this->load->view('success', $data);
-		$this->load->view('footer');
+        $this->load->view('success', $data);
+        $this->load->view('footer');
     }
 
     public function reviewSave() {
