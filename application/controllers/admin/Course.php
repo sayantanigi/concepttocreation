@@ -1504,6 +1504,28 @@ class Course extends Admin_Controller
         }
         redirect(admin_url('course/material_list/' . $course_id));
     }
+
+    public function purchaseCourse() {
+        $member = $this->input->post('member');
+        $course_id = $this->input->post('assigncourseID');
+        $getCoursePrice = $this->db->query('select price from courses where id ="'.$course_id.'"')->result_array();
+        $enrollment_price = @$getCoursePrice[0]['price'];
+        $price_cents = number_format((float)$enrollment_price, 2, '.', '');;
+        $currency = 'USD';
+        $currency_symbol = '$';
+        //$transaction_id	= $randomString;
+        for ($i=0; $i< count($member); $i++) {
+            $n=29;
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+            for ($j = 0; $j < $n; $j++) {
+                $index = rand(0, strlen($characters) - 1);
+                $randomString .= $characters[$index];
+            }
+            $this->db->query("INSERT INTO course_enrollment (`course_id`, `user_id`, `enrollment_price`, `price_cents`, `currency`, `currency_symbol`, `payment_status`, `transaction_id`) VALUES ('$course_id', '$member[$i]', '$enrollment_price', '$price_cents', '$currency', '$currency_symbol', 'COMPLETED', '$randomString')");
+        }
+        echo '1';
+    }
 }
 
 /* End of file Products.php */

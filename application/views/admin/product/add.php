@@ -121,24 +121,32 @@
                   </div>
                 </div>
                 <div class="col-sm-10">
-                  <div class="col-sm-6">
+                  <div class="col-sm-12">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Course Price(In $)</label>
-                      <input type="text" name="frm[price]" value="<?= $course->price ?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Price">
+                    <label for="exampleInputEmail1">Course Type <span style="color: red">*</span></label>
+                      <select class="form-control" name="frm[course_type]" id="course_type" required>
+                        <option value="">Choose an option</option>
+                        <option value="free" <?php if($course->course_type == 'free') { echo "selected"; } ?>>Free</option>
+                        <option value="paid" <?php if($course->course_type == 'paid') { echo "selected"; } ?>>Paid</option>
+                      </select>
                     </div>
                   </div>
-                  <!--  <div class="col-sm-6">
-                     <div class="form-group">
-                      <label for="exampleInputEmail1">Video</label>
-                      <input type="file" name="video" value="<?= $course->video ?>" class="form-control" id="exampleInputEmail1">
-                    </div>
-                  </div> -->
                 </div>
-                <div class="col-sm-10">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Price ID (Stripe Price ID) <span style="color: red">*</span></label>
-                      <input type="text" name="frm[price_key]" value="<?= $course->price_key ?>" class="form-control" id="exampleInputEmaila1" placeholder="Price ID (Stripe Price ID)" required>
+                <div class="courseTypefield">
+                  <div class="col-sm-10">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Course Price(In $)</label>
+                        <input type="text" name="frm[price]" value="<?= $course->price ?>" class="form-control price" id="exampleInputEmail1" placeholder="Enter Price">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Price ID (Stripe Price ID) <span style="color: red">*</span></label>
+                        <input type="text" name="frm[price_key]" value="<?= $course->price_key ?>" class="form-control price_key" id="exampleInputEmaila1" placeholder="Price ID (Stripe Price ID)" required>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -181,3 +189,37 @@
     </div>
   </div>
 </section>
+<style>
+  .courseTypefield {display: none;}
+</style>
+<script>
+$(document).ready(function(){
+  var selectedCourseType = $('#course_type').val();
+  if(selectedCourseType == 'free') {
+    $('.courseTypefield').hide();
+    $('.price').val('');
+    $('.price_key').val('');
+    $('.price_key').prop('required',false);
+  } else if (selectedCourseType == 'paid') {
+    $('.courseTypefield').show();
+    $('.price_key').prop('required',true);
+  } else {
+    $('.courseTypefield').hide();
+  }
+});
+
+$('#course_type').change(function(){
+  var selectedOption = $(this).val(); //alert(selectedOption);
+  if(selectedOption == 'free') {
+    $('.courseTypefield').hide();
+    $('.price').val('');
+    $('.price_key').val('');
+    $('.price_key').prop('required',false);
+  } else if (selectedOption == 'paid') {
+    $('.courseTypefield').show();
+    $('.price_key').prop('required',true);
+  } else {
+    $('.courseTypefield').hide();
+  }
+})
+</script>

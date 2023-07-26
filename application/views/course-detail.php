@@ -121,19 +121,14 @@
                             $checkUserenrollment = $this->db->query($checkUserEnrolledSql)->result_array();
                             //print_r($checkUserenrollment);
                             if(@$checkUserenrollment[0]['user_id'] == @$user_id) {    
-                        ?>
+                            ?>
                             <div class="btn-part">
                                 <ul class="sidebar-list">
                                     <li class=" active"><a href="<?php echo base_url()?>enrolled-courses"style="text-align: center;">Go to Dashboard</a></li>
                                 </ul>
                             </div>
-                            <?php } else { ?>
-                            <!-- <form action="<?= base_url('course-enrollment/' . @$detail->id) ?>" method="post" id="form_validation33" enctype="multipart/form-data">
-                                <div class="btn-part">
-                                    <button type="submit" name="enrollment" value="enrollment" class="btn readon2 orange-transparent">$<?php echo number_format(@$detail->price,2); ?></button>
-                                    <button type="submit" name="enrollment" value="enrollment" class="btn readon2 orange-transparent">Buy Now</button>
-                                </div>
-                            </form> -->
+                            <?php } else { 
+                            if (@$detail->course_type != 'free') { ?>
                             <form action="<?= base_url('checkout') ?>" method="post" id="form_validation33" enctype="multipart/form-data">
                                 <div class="btn-part">
                                     <button type="submit" name="enrollment" value="<?php echo @$detail->price_key; ?>" class="btn readon2 orange-transparent">$<?php echo number_format(@$detail->price,2); ?></button>
@@ -142,14 +137,27 @@
                                     <button type="submit" name="enrollment" value="<?php echo @$detail->price_key; ?>" class="btn readon2 orange-transparent">Buy Now</button>
                                 </div>
                             </form>
-                            <?php } ?>
-                        <?php } else { ?>
-                            <form action="<?= base_url('login/' . @$detail->id) ?>" method="post" id="form_validation33" enctype="multipart/form-data">
+                            <?php } else { ?>
                                 <div class="btn-part">
-                                    <button type="submit" name="enrollment" value="<?php echo @$detail->price_key; ?>" class="btn readon2 orange-transparent">$<?php echo number_format(@$detail->price,2); ?></button>
-                                    <button type="submit" name="enrollment" value="<?php echo @$detail->price_key; ?>" class="btn readon2 orange-transparent">Buy Now</button>
+                                    <button type="submit" name="enrollment" value="<?php echo @$detail->course_type; ?>" class="btn readon2 orange-transparent"><?php echo ucwords(@$detail->course_type); ?></button>
+                                    <input type="hidden" id="course_id" name ="course_id" value="<?php echo @$detail->id?>">
+                                    <input type="hidden" id="user_id" name ="user_id" value="<?php echo @$user_id?>">
+                                    <p name="enrollment" id="course_activation" class="btn readon2 orange-transparent">Activate</p>
                                 </div>
-                            </form>
+                            <?php } } } else {
+                            if (@$detail->course_type != 'free') { ?>
+                                <form action="<?= base_url('login/') ?>" method="post" id="form_validation33" enctype="multipart/form-data">
+                                    <div class="btn-part">
+                                        <button type="submit" name="enrollment" value="<?php echo @$detail->price_key; ?>" class="btn readon2 orange-transparent">$<?php echo number_format(@$detail->price,2); ?></button>
+                                        <button type="submit" name="enrollment" value="<?php echo @$detail->price_key; ?>" class="btn readon2 orange-transparent">Buy Now</button>
+                                    </div>
+                                </form>
+                                <?php } else { ?>
+                                    <div class="btn-part">
+                                        <button type="submit" name="enrollment" value="<?php echo @$detail->course_type; ?>" class="btn readon2 orange-transparent"><?php echo ucwords(@$detail->course_type); ?></button>
+                                        <a href="<?= base_url('login/') ?>" name="enrollment" id="course_activation1" class="btn readon2 orange-transparent">Activate</a>
+                                    </div>
+                                <?php } ?>
                         <?php } ?>
                     </div>
                 </div>
@@ -287,31 +295,41 @@
                                                     <span class="fa fa-star-half-o"></span> -->
                                                 </div>
                                                 <div class="text"><?php echo $value->review_message; ?></div>
-
                                         </div>
                                         <?php } } ?>
                                     </div>
-                                    
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
                 <!-- Video Column -->
-
             </div>
         </div>
     </section>
 </div>
 <!-- <script src="https://js.stripe.com/v3/"></script> -->
 <style>
-    /* .cource-review-box .rating .fa {
-        color: #FFD700;
-    } */
-    .stars {
-        color: #ff7501;
-        font-size: 1.2em;
-    }
+/* .cource-review-box .rating .fa {
+    color: #FFD700;
+} */
+.stars {color: #ff7501; font-size: 1.2em;}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+$('#course_activation').click(function() {
+    var user_id = $('#user_id').val();
+    var course_id = $('#course_id').val();
+    var baseUrl = "<?= base_url(); ?>";
+    $.ajax({
+        url: baseUrl + 'Home/purchaseCourse',
+        type: 'POST',
+        data: {user_id: user_id, course_id: course_id,},
+        success: function(data) {
+            if(data == 1) {
+                location.reload();
+            }
+        }
+    });
+})
+</script>

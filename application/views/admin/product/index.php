@@ -1,15 +1,13 @@
 <section class="content-header">
-  <h1>
-    <?= $title ?>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="<?= site_url('dashboard') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><?= $title ?></li>
-  </ol>
+    <h1><?= $title ?></h1>
+    <ol class="breadcrumb">
+        <li><a href="<?= site_url('dashboard') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><?= $title ?></li>
+    </ol>
 </section>
 
 <section class="content-header">
-  <?php $this->load->view('alert'); ?>
+    <?php $this->load->view('alert'); ?>
 </section>
 <!-- Main content -->
 <section class="content">
@@ -59,7 +57,14 @@
                   <td>
                     <div class="truncate"><?= strip_tags($course_v->description) ?></div>
                   </td>
-                  <td>$<?= number_format($course_v->price, 2) ?></td>
+                  <td>
+                    <?php if(@$course_v->course_type == 'free') {
+                        echo "Free";
+                    } else {
+                        echo '$'.number_format($course_v->price, 2);
+                    }
+                    ?>
+                    </td>
                   <td style="vertical-align: middle;">
                     <div class="checkbox checbox-switch switch-success">
                       <label>
@@ -89,7 +94,45 @@
                       </button>
                     </div>
                   </td>
+                  <td>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="assign_course_<?=$course_v->id?>">Assign Course</button>
+                  <input type="hidden" id="courseID_<?=$course_v->id?>" value="<?=$course_v->id?>"/>
+                  </td>
                 </tr>
+                <div class="modal fade" id="exampleModal_<?=$course_v->id?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Member Lists</h5>
+                                <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                            </div>
+                            <?php 
+                            $checkAssignedCourseToUser = $this->db->query("SELECT GROUP_CONCAT(user_id) as user_id FROM course_enrollment where course_enrollment.course_id = $course_v->id")->result_array();
+                            $userList = $checkAssignedCourseToUser[0]['user_id'];
+                            if(!empty($userList)) {
+                                $getMemberList = $this->db->query("SELECT id, fname, lname FROM users where id NOT IN ($userList) AND email_verified = 1 AND status = 1")->result_array();
+                            } else {
+                                $getMemberList = $this->db->query("SELECT id, fname, lname FROM users where email_verified = 1 AND status = 1")->result_array();
+                            }
+                            if(!empty($getMemberList)) { ?>
+                            <div class="modal-body">
+                                <select name="member-list" id="member-list_<?=$course_v->id?>" multiple style="width: 100%">
+                                <?php foreach($getMemberList as $value) { ?>
+                                    <option value="<?= $value['id']?>"><?= $value['fname']." ".$value['lname']?></option>
+                                <?php } ?>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <p class="btn btn-primary assign_member_<?=$course_v->id?>">Assign</p>
+                                <input type="hidden" id="assigncourseID_<?=$course_v->id?>" value=""/>
+                            </div>
+                            <div class="sussess_message" style="padding: 10px 0 10px 0; text-align: center; color: #1a6d2d; display: none;">Successfully Assigned</div>
+                            <?php } else { ?>
+                                <div class="modal-body">All users are assigned to this course</div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
             <?php
               }
             }
@@ -104,23 +147,62 @@
       <!-- /.box -->
     </div>
   </div>
-
-  <script>
+<style>
+    .modal-title {width: 96%; display: inline-block;}
+    .modal-close {background: none; border: none; float: right;}
+</style>
+<script>
     function deleteCourse(id) {
-      swal({
-        title: 'Are You sure want to delete this course?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#36A1EA',
-        cancelButtonColor: '#e50914',
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
-        closeOnConfirm: true,
-        closeOnCancel: true
-      }, function(isConfirm) {
-        if (isConfirm) {
-          window.location.href = '<?= admin_url('course/deleteCourse/') ?>' + id
-        }
-      });
+        swal({
+            title: 'Are You sure want to delete this course?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#36A1EA',
+            cancelButtonColor: '#e50914',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            closeOnConfirm: true,
+            closeOnCancel: true
+        }, function(isConfirm) {
+            if (isConfirm) {
+                window.location.href = '<?= admin_url('course/deleteCourse/') ?>' + id
+            }
+        });
     }
-  </script>
+
+    <?php foreach ($course as $course_v) { ?>
+    $('#assign_course_<?=$course_v->id?>').click(function(){
+        var courseID = $('#courseID_<?=$course_v->id?>').val();
+        $('#exampleModal_<?=$course_v->id?>').show();
+        $('.modal').css('opacity','1');
+        $('.modal-dialog').css('width','300px');
+        $('.modal-dialog').css('top','30%');
+        $('#assigncourseID_<?=$course_v->id?>').val(courseID);
+    })
+    $('.modal-close').click(function(){
+        $('.modal').css('opacity','0');
+        $('.modal-dialog').css('top','30%');
+        $('.modal').hide();
+    })
+
+    $('.assign_member_<?=$course_v->id?>').click(function() {
+        var member = $('#member-list_<?=$course_v->id?>').val();
+        var assigncourseID = $('#assigncourseID_<?=$course_v->id?>').val();
+        var baseUrl = "<?= base_url(); ?>";
+        $.ajax({
+            type:"post",
+            cache:false,
+            url:baseUrl+"Admin/Course/purchaseCourse",
+            data:{member:member, assigncourseID: assigncourseID},
+            beforeSend:function(){},
+            success:function(returndata) {
+                //console.log(returndata); return false;
+                $('.sussess_message').show();
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        });
+    })
+    <?php } ?>
+</script>

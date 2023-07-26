@@ -105,7 +105,13 @@
                             <li class="user">
                                 <img src="<?php echo base_url('user_assets/images/C2C_Home/Tag_Blue.png');?>">
                             </li>
-                            <li><span class="price">$<?= number_format($value->price, 2) ?></span></li>
+                            <li><span class="price">
+                                <?php if(@$value->course_type == 'free') {
+                                    echo "Free";
+                                } else {
+                                    echo '$'.number_format($value->price, 2);
+                                }
+                                ?></span></li>
                         </ul>
                         <div class="bottom-part">
                             <div class="info-meta">

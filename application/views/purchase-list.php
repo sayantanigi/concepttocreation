@@ -61,7 +61,13 @@
                                         <td class="correct">
                                             <div class="dashboard-table__mobile-heading">Amount</div>
                                             <div class="dashboard-table__text">
-                                                <span class="sale-price">$<?php echo number_format(@$value->enrollment_price,2); ?></span>
+                                                <span class="sale-price">
+                                                <?php if(@$value->enrollment_price == '0') {
+                                                    echo "Free";
+                                                } else {
+                                                    echo '$'.number_format(@$value->enrollment_price,2);
+                                                }
+                                                ?></span>
                                             </div>
                                         </td>
                                         <td class="incorrect">

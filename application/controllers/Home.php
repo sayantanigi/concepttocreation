@@ -901,4 +901,18 @@ class Home extends CI_Controller {
             }
         }
     }
+
+    public function purchaseCourse() {
+        $user_id = $this->input->post('user_id');
+        $course_id = $this->input->post('course_id');
+        $enrollment_price = '0';
+        $price_cents = '0.00';
+        $currency = 'USD';
+        $currency_symbol = '$';
+        $transaction_id	= 'txn_'.rand();
+        $this->db->query("INSERT INTO course_enrollment (`course_id`, `user_id`, `enrollment_price`, `price_cents`, `currency`, `currency_symbol`, `payment_status`, `transaction_id`) VALUES ('$course_id', '$user_id', '$enrollment_price', '$price_cents', '$currency', '$currency_symbol', 'COMPLETED', '$transaction_id')");
+        if($this->db->insert_id()) {
+            echo '1';
+        }                        
+    }
 }
